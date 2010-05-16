@@ -1,0 +1,58 @@
+Migrations
+	migration
+Emails (many->many)
+	idkey,email
+Keys
+	idkey,key
+DNS
+	vname,type,ttl,dst  (vname is in reversed-domain-ending-in-dot format)
+Permissions
+	vname,idkey
+
+
+recordtypes:
+	A
+	AAAA?
+	MX
+	NS
+	CNAME
+	TXT
+	SOA
+	??
+
+messages:
+	10 email me my key(domains...) (* hmac not checked; rate limited)
+	11 keygen()
+	12 rekey(idnewkey)
+	20 list emails(substr)
+	21 add email(addrs...)
+	22 del email(addrs...)
+	30 list names(recursive,domains...)
+	31 set names((name,type,ttl,dst)...)
+	32 del names((name,type)...)
+	40 history log(domains...)
+	80 response(code,str)
+		00 ok
+		20 permission denied
+		f0 unknown version
+		f1 unknown command
+		f2 invalid hmac
+		ff replay protection - try again
+
+message format
+	1 ver
+	1 cmd
+	8 serial
+	8 keyid
+	10? hmac
+	[content]
+
+
+command line
+	dyn get name.org
+	dyn set [-t mx/ns/cname/txt] name.org [ip...]
+	dyn del name.org
+	dyn rekey [newkey]
+	dyn addemail <addresses...>
+	dyn delemail <addresses...>
+	dyn log [domains...]
