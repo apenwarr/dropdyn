@@ -4,6 +4,9 @@ SHELL=/bin/sh
 
 default: it
 
+clean:
+	rm -f $(shell cat .gitignore)
+
 alloc.a: \
 makelib alloc.o alloc_re.o getln.o getln2.o stralloc_cat.o \
 stralloc_catb.o stralloc_cats.o stralloc_copy.o stralloc_eady.o \
