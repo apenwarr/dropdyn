@@ -9,7 +9,6 @@ DNS
 Permissions
 	vname,idkey
 
-
 recordtypes:
 	A
 	AAAA?
@@ -27,13 +26,18 @@ messages:
 	20 list emails(substr)
 	21 add email(addrs...)
 	22 del email(addrs...)
-	30 list names(recursive,domains...)
+	30 list names(domains...)
 	31 set names((name,type,ttl,dst)...)
 	32 del names((name,type)...)
-	40 history log(domains...)
+	40 list keyids(domains...)
+	41 add key(names...)
+	42 del key(names...)
+	70 history log(domains...)
 	80 response(code,str)
 		00 ok
 		20 permission denied
+		21 can't change your own permissions
+		22 can't delete: inherited from parent
 		f0 unknown version
 		f1 unknown command
 		f2 invalid hmac
@@ -44,8 +48,8 @@ message format
 	1 cmd
 	8 serial
 	8 keyid
-	10? hmac
 	[content]
+	10? hmac
 
 
 command line
